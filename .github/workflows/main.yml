@@ -27,5 +27,19 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-app-swarm:${{ github.sha }}
+
+    deploy:
+      runs-on: ubuntu-latest
+      steps:
+        -
+          name: Update service image on Swarm manager
+          uses: appleboy/ssh-action@v1.2.0
+            with:
+              host: ${{ secrets.SWARM_MANAGER_HOST }}
+              username: ${{ secret.SWARM_MANAGER_USERNAME }}
+              password: ${{ secrets.SWARM_MANAGER_PASSWORD }}
+              port: ${{ secrets.SWARM_MANAGER_PORT }}
+              script: docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/flask-app-swarm:${{ github.sha }} flask-app
+
           
       
