@@ -37,7 +37,7 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SWARM_MANAGER_HOST }}
-          username: ${{ secret.SWARM_MANAGER_USERNAME }}
+          username: ${{ secrets.SWARM_MANAGER_USERNAME }}
           password: ${{ secrets.SWARM_MANAGER_PASSWORD }}
           port: ${{ secrets.SWARM_MANAGER_PORT }}
           script: docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/flask-app-swarm:${{ github.sha }} flask-app
