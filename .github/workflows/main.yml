@@ -27,5 +27,23 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: moumou200/flask-app-swarm:${{ github.sha }}
+
+
+  # Job pour déployer sur Docker Swarm
+  deploy:
+      runs-on: ubuntu-latest
+      needs: build
+    
+    steps:
+        - name: Set up SSH key for Swarm Manager
+          uses: appleboy/ssh-action@v0.1.0
+          with:
+            host: ${{ secrets.SWARM_MANAGER_HOST }}  # L'adresse IP ou le nom d'hôte de votre Swarm Manager
+            username: ${{ secrets.SWARM_MANAGER_USER }}  # Nom d'utilisateur SSH pour se connecter au serveur Swarm
+            key: ${{ secrets.SWARM_MANAGER_SSH_KEY }}  # Clé privée SSH pour la connexion
+            port: ${{ secrets.SWARM_MANAGER_SSH_PORT }}  # Port SSH (par défaut 22)
+            script: |
+          
+            docker service update --image moumou200/flask-app-swarm:${{ github.sha }} flask-app-swarm-service
           
       
