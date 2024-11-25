@@ -26,6 +26,6 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: mourad/flask-app-swarm:${{ github.sha }}
+          tags: moumou200/flask-app-swarm:${{ github.sha }}
           
       
