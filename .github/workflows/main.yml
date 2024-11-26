@@ -26,23 +26,23 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
+          tags: moumou200/flask-app-swarm:${{ github.sha }}
 
+
+  # Job pour déployer sur Docker Swarm
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Update service image on Swarm manager
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.SWARM_MANAGER_HOST }}
-          username: ${{ secrets.SWARM_MANAGER_USERNAME }}
-          password: ${{ secrets.SWARM_MANAGER_PASSWORD }}
-          port: ${{ secrets.SWARM_MANAGER_PORT }}
-          script: docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPOSITORY }}:${{ github.sha }} ${{ vars.SWARM_SERVICE_NAME }}
-
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+       - 
+         name: Set up SSH key for Swarm Manager
+         uses: appleboy/ssh-action@v1.2.0
+         with:
+           host: ${{ secrets.SWARM_MANAGER_HOST }}  # L'adresse IP ou le nom d'hôte de votre Swarm Manager
+           username: ${{ secrets.SWARM_MANAGER_USER }}  # Nom d'utilisateur SSH pour se connecter au serveur Swarm
+           password: ${{ secrets.SWARM_MANAGER_PASSWORD }}  # Mot de passe SSH pour la connexion
+           port: ${{ secrets.SWARM_MANAGER_SSH_PORT }}  # Port SSH (par défaut 22)
+           script: |
+            docker service update --image moumou200/flask-app-swarm:${{ github.sha }} flask_app_swar_service
           
       
-            echo "${{ secrets.DOCKER_COMPOSE_YAML }}" > docker-compose.yml
-            docker stack deploy -c docker-compose.yml my_stack
