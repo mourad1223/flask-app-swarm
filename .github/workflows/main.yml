@@ -26,7 +26,7 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-app-swarm:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ variables.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
 
   deploy:
     needs: build
@@ -40,7 +40,7 @@ jobs:
           username: ${{ secrets.SWARM_MANAGER_USERNAME }}
           password: ${{ secrets.SWARM_MANAGER_PASSWORD }}
           port: ${{ secrets.SWARM_MANAGER_PORT }}
-          script: docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/flask-app-swarm:${{ github.sha }} flask-app
+          script: docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/${{ variables.DOCKERHUB_REPOSITORY }}:${{ github.sha }} ${{ variables.SWARM_SERVICE_NAME }}
 
           
       
