@@ -43,7 +43,7 @@ jobs:
         with:
           host: ${{ secrets.SWARM_MANAGER_HOST }}
           username: ${{ secrets.SWARM_MANAGER_USER }}
-          password: ${{ secrets.SWARM_MANAGER_password }}
+          password: ${{ secrets.SWARM_MANAGER_SSH_PASSWORD }}
           port: ${{ secrets.SWARM_MANAGER_SSH_PORT }}
           script: |
             echo "${{ secrets.DOCKER_COMPOSE_YAML }}" > docker-compose.yml
