@@ -43,6 +43,6 @@ jobs:
            password: ${{ secrets.SWARM_MANAGER_PASSWORD }}  # Mot de passe SSH pour la connexion
            port: ${{ secrets.SWARM_MANAGER_SSH_PORT }}  # Port SSH (par défaut 22)
            script: |
-            docker service update --image moumou200/flask_app_swarm:${{ github.sha }} flask_app_swar_service
+            docker service update --image moumou200/flask-app-swarm:${{ github.sha }} flask_app_swar_service
           
       
