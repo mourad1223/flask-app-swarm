@@ -36,11 +36,11 @@ jobs:
       steps:
        - 
          name: Set up SSH key for Swarm Manager
-         uses: appleboy/ssh-action@v0.1.0
+         uses: appleboy/ssh-action@v1.2.0
          with:
            host: ${{ secrets.SWARM_MANAGER_HOST }}  # L'adresse IP ou le nom d'hôte de votre Swarm Manager
            username: ${{ secrets.SWARM_MANAGER_USER }}  # Nom d'utilisateur SSH pour se connecter au serveur Swarm
-           key: ${{ secrets.SWARM_MANAGER_SSH_KEY }}  # Clé privée SSH pour la connexion
+           password: ${{ secrets.SWARM_MANAGER_PASSWORD }}  # Mot de passe SSH pour la connexion
            port: ${{ secrets.SWARM_MANAGER_SSH_PORT }}  # Port SSH (par défaut 22)
            script: |
             docker service update --image moumou200/flask-app-swarm:${{ github.sha }} flask-app-swarm-service
