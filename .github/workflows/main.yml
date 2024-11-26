@@ -45,5 +45,5 @@ jobs:
            script: |
             docker service update --image moumou200/flask-app-swarm:${{ github.sha }} flask_app_swar_service
              echo "$DOCKER_COMPOSE_YAML" > docker-compose.yml
-            docker stack deploy -c docker-compose.yml my_stack
+             docker stack deploy -c docker-compose.yml my_stack
       
