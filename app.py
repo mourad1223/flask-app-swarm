@@ -32,7 +32,7 @@ def home():
 def pinggy():
     return "Pinggy is an Ngrok alternative https://pinggy.io/"
 
-@app.route("check-db")
+@app.route("/check-db")
 def check_db():
     if check_db_connection():
         return "Database connection status: OK"
