@@ -42,6 +42,7 @@ def pinggy():
 
 @app.route("/check-db")
 def check_db():
+    check_db_connection()
     if check_db_connection():
         return "Database connection status: OK"
     else:
